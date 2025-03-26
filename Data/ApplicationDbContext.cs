@@ -1,18 +1,15 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using AIMSR.Models;
 using Microsoft.EntityFrameworkCore;
-using Aimsr.ViewModels;
-using AIMSR.Areas.Identity.Data;
 
-namespace Aimsr.Data
+namespace AIMSR.Data // Make sure this namespace is correct
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class ApplicationDbContext : DbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
-
-        protected override void OnModelCreating(ModelBuilder builder)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+            : base(options)
         {
-            base.OnModelCreating(builder);
         }
+
+        public DbSet<Profile> Profiles { get; set; } // Ensure this exists
     }
 }
