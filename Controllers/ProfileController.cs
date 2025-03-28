@@ -13,7 +13,14 @@ public class ProfileController : Controller
 
     public IActionResult Index()
     {
-        var userProfile = _context.Profiles.FirstOrDefault();
-        return View("Profile",userProfile);
+        var userProfile = _context.Profile.FirstOrDefault();
+
+        if (userProfile == null)
+        {
+            return NotFound("No profiles found in the database.");
+        }
+
+        return View("Profile", userProfile);
     }
+
 }

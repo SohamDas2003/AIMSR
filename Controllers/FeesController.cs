@@ -1,16 +1,30 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using AIMSR.Data;
+using AIMSR.Models;
+using System.Linq;
 
-namespace AIMSR.Controllers;
-
-public class FeesController : Controller
+namespace AIMSR.Controllers
 {
-    public IActionResult Index()
+    public class FeesController : Controller
     {
-        return View("Fees");
-    }
+        private readonly ApplicationDbContext _context;
 
-    public IActionResult Pay()
-    {
-        return View("Pay");
+        public FeesController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
+        public IActionResult DisplayFee()
+        {
+            // Get the first record from the database
+            var singleFee = _context.Fees.FirstOrDefault();
+
+            if (singleFee == null)
+            {
+                return NotFound(); // Handle case where no record exists
+            }
+
+            return View(singleFee); // Pass a single Fees object
+        }
     }
 }

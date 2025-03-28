@@ -2,13 +2,11 @@
 
 namespace AIMSR.Controllers
 {
-
-    public class TimetableController : Controller
+    public class AboutController : Controller
     {
         public IActionResult Index()
         {
-            return View("Timetable"); // Ensure it matches the view file name
+            return View("About");
         }
     }
-
 }

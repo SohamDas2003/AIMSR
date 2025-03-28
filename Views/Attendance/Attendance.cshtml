@@ -1,35 +1,21 @@
-﻿@{
-    ViewData["Title"] = "Attendance";
-}
+﻿@model List<AIMSR.Models.Attendance>
 
-<div class="container mt-4">
-    <h2 class="text-center">Student Attendance</h2>
-    <p class="text-center">Track your attendance record here.</p>
+<h2>Attendance Details</h2>
 
-    <table class="table table-bordered mt-4">
-        <thead class="table-dark">
-            <tr>
-                <th>Date</th>
-                <th>Subject</th>
-                <th>Status</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>20-Mar-2025</td>
-                <td>Mathematics</td>
-                <td class="text-success">Present</td>
-            </tr>
-            <tr>
-                <td>19-Mar-2025</td>
-                <td>Computer Science</td>
-                <td class="text-danger">Absent</td>
-            </tr>
-            <tr>
-                <td>18-Mar-2025</td>
-                <td>Physics</td>
-                <td class="text-success">Present</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+<table border="1">
+    <tr>
+        <th>Roll No</th>
+        <th>Date</th>
+        <th>Subject</th>
+        <th>Status</th>
+    </tr>
+    @foreach (var record in Model)
+    {
+        <tr>
+            <td>@record.RollNo</td>
+            <td>@record.Date.ToShortDateString()</td>
+            <td>@record.Subject</td>
+            <td>@record.Status</td>
+        </tr>
+    }
+</table>

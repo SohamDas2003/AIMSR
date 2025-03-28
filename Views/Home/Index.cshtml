@@ -5,108 +5,251 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewData["Title"] - College Website</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        .card {
-            transition: transform 0.2s;
+        /* Custom Styles */
+        .carousel-item {
+            height: 500px;
         }
-        .card:hover {
-            transform: scale(1.05);
+
+        .carousel-image {
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
+            filter: brightness(0.7);
         }
-        .navbar-brand {
-            font-weight: bold;
-            font-size: 1.5rem;
+
+        .carousel-caption {
+            bottom: 30%;
         }
-        .feature-icon {
-            width: 50px;
-            height: 50px;
-            margin-bottom: 10px;
+
+        .program-card {
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+            .program-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            }
+
+        .fade-in {
+            opacity: 0;
+            transition: opacity 1s ease-in;
+        }
+
+            .fade-in.visible {
+                opacity: 1;
+            }
+
+        .events-section {
+            background-color: #f0f8ff;
+        }
+
+        .icon-circle {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background-color: #f8f9fa;
+            margin-bottom: 1rem;
+        }
+
+        .cs-icon {
+            color: #007bff;
+        }
+
+        .business-icon {
+            color: #28a745;
+        }
+
+        .engineering-icon {
+            color: #6f42c1;
         }
     </style>
 </head>
 <body>
+    <!-- Hero Carousel -->
+    <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active"></button>
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1"></button>
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="~/images/IMG_20250327_211900.png" class="carousel-image" alt="Student studying with laptop">
+            </div>
+            <div class="carousel-item">
+                <img src="~/images/IMG_0988.png" class="carousel-image" alt="Students collaborating in modern classroom">
+            </div>
+            <div class="carousel-item">
+                <img src="~/images/IMG_6100.png" class="carousel-image" alt="University campus building">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
 
-    <!-- Main Content -->
-    <div class="container mt-5">
-        <div class="row">
-            <!-- Fees Card -->
-            <div class="col-md-4 mb-4">
-                <div class="card text-center">
-                    <img src="~/images/fees.png" class="card-img-top feature-icon mx-auto mt-3" alt="Fees">
-                    <div class="card-body">
-                        <h5 class="card-title">Fees</h5>
-                        <p class="card-text">View and pay your fees online.</p>
-                        <a href="/Fees" class="btn btn-primary">Go to Fees</a>
-                    </div>
-                </div>
+    <!-- Featured Programs Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="text-center mb-5 fade-in">
+                <h2 class="display-5 fw-bold">Featured Programs</h2>
+                <p class="lead text-muted">Discover academic programs designed to prepare you for success in your chosen field.</p>
             </div>
 
-            <!-- Attendance Card -->
-            <div class="col-md-4 mb-4">
-                <div class="card text-center">
-                    <img src="~/images/Attendance.png" class="card-img-top feature-icon mx-auto mt-3" alt="Attendance">
-                    <div class="card-body">
-                        <h5 class="card-title">Attendance</h5>
-                        <p class="card-text">Check your attendance records.</p>
-                        <a href="/Attendance" class="btn btn-primary">Go to Attendance</a>
+            <div class="row g-4">
+                <!-- Card 1 -->
+                <div class="col-lg-3 col-md-6 fade-in">
+                    <!-- Changed from col-md-4 to col-lg-3 col-md-6 -->
+                    <div class="card h-100 program-card border-0 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <div class="icon-circle mx-auto">
+                                <i class="fas fa-book-open fa-2x cs-icon"></i>
+                            </div>
+                            <h3 class="card-title h4">MCA</h3>
+                            <p class="card-text text-muted">Gain expertise in programming, algorithms, and system design</p>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Profile Card -->
-            <div class="col-md-4 mb-4">
-                <div class="card text-center">
-                    <img src="~/images/Profile.png" class="card-img-top feature-icon mx-auto mt-3" alt="Profile">
-                    <div class="card-body">
-                        <h5 class="card-title">Profile</h5>
-                        <p class="card-text">Update and manage your profile.</p>
-                        <a href="/Profile" class="btn btn-primary">Go to Profile</a>
+                <!-- Card 2 -->
+                <div class="col-lg-3 col-md-6 fade-in">
+                    <div class="card h-100 program-card border-0 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <div class="icon-circle mx-auto">
+                                <i class="fas fa-users fa-2x business-icon"></i>
+                            </div>
+                            <h3 class="card-title h4">BMS</h3>
+                            <p class="card-text text-muted">Develop leadership skills for today's global business environment</p>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Marks Card -->
-            <div class="col-md-4 mb-4">
-                <div class="card text-center">
-                    <img src="~/images/Marks.png" class="card-img-top feature-icon mx-auto mt-3" alt="Marks">
-                    <div class="card-body">
-                        <h5 class="card-title">Marks</h5>
-                        <p class="card-text">View your academic marks and results.</p>
-                        <a href="/Marks" class="btn btn-primary">Go to Marks</a>
+                <!-- Card 3 -->
+                <div class="col-lg-3 col-md-6 fade-in">
+                    <div class="card h-100 program-card border-0 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <div class="icon-circle mx-auto">
+                                <i class="fas fa-graduation-cap fa-2x engineering-icon"></i>
+                            </div>
+                            <h3 class="card-title h4">MMS</h3>
+                            <p class="card-text text-muted">Solve complex problems through applied science and mathematics</p>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Timetable Card -->
-            <div class="col-md-4 mb-4">
-                <div class="card text-center">
-                    <img src="~/images/Timetable.png" class="card-img-top feature-icon mx-auto mt-3" alt="Timetable">
-                    <div class="card-body">
-                        <h5 class="card-title">Timetable</h5>
-                        <p class="card-text">Check your class schedule.</p>
-                        <a href="/Timetable" class="btn btn-primary">Go to Timetable</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Library Card -->
-            <div class="col-md-4 mb-4">
-                <div class="card text-center">
-                    <img src="~/images/Library.png" class="card-img-top feature-icon mx-auto mt-3" alt="Library">
-                    <div class="card-body">
-                        <h5 class="card-title">Library</h5>
-                        <p class="card-text">Access library resources and books.</p>
-                        <a href="/Library" class="btn btn-primary">Go to Library</a>
+                <!-- Card 4 -->
+                <div class="col-lg-3 col-md-6 fade-in">
+                    <div class="card h-100 program-card border-0 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <div class="icon-circle mx-auto">
+                                <i class="fas fa-graduation-cap fa-2x engineering-icon"></i>
+                            </div>
+                            <h3 class="card-title h4">PGDM</h3>
+                            <p class="card-text text-muted">Solve complex problems through applied science and mathematics</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Events Section -->
+    <section class="py-5 events-section">
+        <div class="container">
+            <div class="text-center mb-5 fade-in">
+                <h2 class="display-5 fw-bold">Upcoming Events</h2>
+                <p class="lead text-muted">Join us for these upcoming events and become part of our community.</p>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-4 fade-in">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body p-4">
+                            <h3 class="card-title h4">Open House</h3>
+                            <p class="card-subtitle mb-3 text-primary">
+                                <i class="far fa-calendar-alt me-1"></i> March 15, 2024
+                            </p>
+                            <p class="card-text text-muted">Tour our campus and meet with faculty and current students</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 fade-in">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body p-4">
+                            <h3 class="card-title h4">Application Workshop</h3>
+                            <p class="card-subtitle mb-3 text-primary">
+                                <i class="far fa-calendar-alt me-1"></i> April 5, 2024
+                            </p>
+                            <p class="card-text text-muted">Get guidance on completing your college application</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 fade-in">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body p-4">
+                            <h3 class="card-title h4">Scholarship Deadline</h3>
+                            <p class="card-subtitle mb-3 text-primary">
+                                <i class="far fa-calendar-alt me-1"></i> May 1, 2024
+                            </p>
+                            <p class="card-text text-muted">Last day to apply for merit-based scholarships</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="py-5 bg-white text-center">
+        <div class="container py-3 fade-in">
+            <h2 class="display-5 fw-bold mb-3">Start Your Journey With Us</h2>
+            <p class="lead text-muted mx-auto" style="max-width: 600px;">
+                Take the first step toward a transformative educational experience.
+            </p>
+            <div class="mt-4">
+                <a href="#" class="btn btn-primary btn-lg px-4 py-2">Apply Now</a>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom Script for Fade-in Effect -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Intersection Observer for fade-in effect
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            // Observe all elements with fade-in class
+            document.querySelectorAll('.fade-in').forEach(element => {
+                observer.observe(element);
+            });
+        });
+    </script>
 </body>
 </html>
