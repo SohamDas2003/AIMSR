@@ -72,7 +72,7 @@ namespace AIMSR.Controllers
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Student");
                 }
                 
                 ModelState.AddModelError(string.Empty, "Invalid login attempt.");

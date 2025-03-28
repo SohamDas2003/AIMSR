@@ -1,0 +1,120 @@
+@model AIMSR.Models.StudentViewModel
+
+@{
+ViewData["Title"] = "Student Dashboard";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Student Profile</h5>
+                </div>
+                <div class="card-body">
+                    <div class="text-center mb-3">
+                        <img src="https://via.placeholder.com/150" class="rounded-circle" alt="Profile Picture">
+                    </div>
+                    <h4 class="text-center">@Model.FullName</h4>
+                    <p class="text-center text-muted">@Model.Email</p>
+
+                    <hr>
+
+                    <div class="mb-2">
+                        <strong>Student ID:</strong> @(Model.StudentId ?? "Not Available")
+                    </div>
+                    <div class="mb-2">
+                        <strong>Course:</strong> @(Model.Course ?? "Not Available")
+                    </div>
+                    <div class="mb-2">
+                        <strong>Department:</strong> @(Model.Department ?? "Not Available")
+                    </div>
+                    <div class="mb-2">
+                        <strong>Semester:</strong> @(Model.Semester?.ToString() ?? "Not Available")
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Quick Links</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <a href="/Attendance" class="btn btn-outline-primary w-100 p-3">
+                                <i class="bi bi-calendar-check"></i>
+                                <div>Attendance</div>
+                            </a>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <a href="/Marks" class="btn btn-outline-primary w-100 p-3">
+                                <i class="bi bi-award"></i>
+                                <div>Marks</div>
+                            </a>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <a href="/Fees" class="btn btn-outline-primary w-100 p-3">
+                                <i class="bi bi-cash-stack"></i>
+                                <div>Fees</div>
+                            </a>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <a href="/Timetable" class="btn btn-outline-primary w-100 p-3">
+                                <i class="bi bi-clock"></i>
+                                <div>Timetable</div>
+                            </a>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <a href="/Library" class="btn btn-outline-primary w-100 p-3">
+                                <i class="bi bi-book"></i>
+                                <div>Library</div>
+                            </a>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <a href="/Profile" class="btn btn-outline-primary w-100 p-3">
+                                <i class="bi bi-person"></i>
+                                <div>Profile</div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Announcements</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3 pb-3 border-bottom">
+                        <h6>Upcoming Exam Schedule</h6>
+                        <p class="text-muted mb-1">Posted on: March 28, 2025</p>
+                        <p>The end semester examination schedule has been released. Please check the exams section for
+                            details.</p>
+                    </div>
+                    <div class="mb-3 pb-3 border-bottom">
+                        <h6>Holiday Notice</h6>
+                        <p class="text-muted mb-1">Posted on: March 25, 2025</p>
+                        <p>The college will remain closed on April 2, 2025 on account of College Foundation Day.</p>
+                    </div>
+                    <div>
+                        <h6>Fee Payment Deadline</h6>
+                        <p class="text-muted mb-1">Posted on: March 20, 2025</p>
+                        <p>The deadline for semester fee payment is April 10, 2025. Please ensure timely payment to
+                            avoid late fee.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+    $(document).ready(function () {
+        // Any JavaScript for the student dashboard can go here
+    });
+</script>
+}
