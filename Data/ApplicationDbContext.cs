@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AIMSR.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -13,6 +13,6 @@ namespace AIMSR.Data
 
         public DbSet<Profile> Profile { get; set; }
         public DbSet<Attendance> Attendance { get; set; }
-        public DbSet<Fees> Fees { get; set; } // Add this line
+        public DbSet<Fees> Fees { get; set; }
     }
 }
