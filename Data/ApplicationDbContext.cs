@@ -10,9 +10,6 @@ namespace AIMSR.Data
             : base(options)
         {
         }
-
-        public DbSet<Profile> Profile { get; set; }
         public DbSet<Attendance> Attendance { get; set; }
-        public DbSet<Fees> Fees { get; set; }
     }
 }

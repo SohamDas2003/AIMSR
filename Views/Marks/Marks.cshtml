@@ -1,45 +1,243 @@
 ﻿@{
-    ViewData["Title"] = "Marks";
+ViewData["Title"] = "Academic Results";
 }
 
 <div class="container mt-4">
-    <h2 class="text-center">Student Marks</h2>
-    <p class="text-center">View your subject-wise marks below.</p>
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-primary text-white">
+            <h2 class="mb-0 fs-4">Semester Results</h2>
+        </div>
+        <div class="card-body p-0">
+            <div class="row g-0">
+                <div class="col-md-3 border-end">
+                    <div class="p-4 text-center">
+                        <div class="display-1 mb-2 text-primary fw-bold">85.2%</div>
+                        <p class="text-muted">Overall Percentage</p>
+                        <div class="progress mb-4" style="height: 8px;">
+                            <div class="progress-bar bg-success" role="progressbar" style="width: 85%;">
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between text-muted small">
+                            <span>0%</span>
+                            <span>50%</span>
+                            <span>100%</span>
+                        </div>
+                        <div class="mt-4">
+                            <span class="badge bg-success fs-6 p-2">Grade: A</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="p-4">
+                        <div class="row g-4">
+                            <div class="col-md-4">
+                                <div class="card bg-light h-100">
+                                    <div class="card-body text-center">
+                                        <div class="display-5 mb-2 text-dark">341</div>
+                                        <p class="mb-0 text-muted">Total Marks</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card bg-success bg-opacity-10 h-100">
+                                    <div class="card-body text-center">
+                                        <div class="display-5 mb-2 text-success">400</div>
+                                        <p class="mb-0 text-muted">Maximum Marks</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card bg-warning bg-opacity-10 h-100">
+                                    <div class="card-body text-center">
+                                        <div class="display-5 mb-2 text-warning">4</div>
+                                        <p class="mb-0 text-muted">Subjects</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <table class="table table-bordered mt-4">
-        <thead class="table-dark">
-            <tr>
-                <th>Subject</th>
-                <th>Marks Obtained</th>
-                <th>Total Marks</th>
-                <th>Percentage</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Mathematics</td>
-                <td>85</td>
-                <td>100</td>
-                <td>85%</td>
-            </tr>
-            <tr>
-                <td>Computer Science</td>
-                <td>90</td>
-                <td>100</td>
-                <td>90%</td>
-            </tr>
-            <tr>
-                <td>Physics</td>
-                <td>78</td>
-                <td>100</td>
-                <td>78%</td>
-            </tr>
-            <tr>
-                <td>Chemistry</td>
-                <td>88</td>
-                <td>100</td>
-                <td>88%</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Subject-wise Performance</h5>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Subject</th>
+                            <th>Marks</th>
+                            <th style="width: 40%;">Performance</th>
+                            <th class="text-center">Grade</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="fw-bold">RPA</div>
+                                <small class="text-muted">MCAE242</small>
+                            </td>
+                            <td>
+                                <div class="fw-bold">85/100</div>
+                                <small class="text-muted">85%</small>
+                            </td>
+                            <td>
+                                <div class="progress" style="height: 8px;">
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: 85%;"></div>
+                                </div>
+                            </td>
+                            <td class="text-center"><span class="badge bg-success">A</span></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="fw-bold">Research Methodology</div>
+                                <small class="text-muted">MCA21</small>
+                            </td>
+                            <td>
+                                <div class="fw-bold">90/100</div>
+                                <small class="text-muted">90%</small>
+                            </td>
+                            <td>
+                                <div class="progress" style="height: 8px;">
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: 90%;"></div>
+                                </div>
+                            </td>
+                            <td class="text-center"><span class="badge bg-success">A+</span></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="fw-bold">Information Security</div>
+                                <small class="text-muted">MCA23</small>
+                            </td>
+                            <td>
+                                <div class="fw-bold">78/100</div>
+                                <small class="text-muted">78%</small>
+                            </td>
+                            <td>
+                                <div class="progress" style="height: 8px;">
+                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 78%;"></div>
+                                </div>
+                            </td>
+                            <td class="text-center"><span class="badge bg-warning">B+</span></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="fw-bold">MIS</div>
+                                <small class="text-muted">MCALE252</small>
+                            </td>
+                            <td>
+                                <div class="fw-bold">88/100</div>
+                                <small class="text-muted">88%</small>
+                            </td>
+                            <td>
+                                <div class="progress" style="height: 8px;">
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: 88%;"></div>
+                                </div>
+                            </td>
+                            <td class="text-center"><span class="badge bg-success">A</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Performance Trend</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="performanceChart" height="250"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Additional Information</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span>Semester</span>
+                            <span class="badge bg-primary rounded-pill">II</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span>Exam Type</span>
+                            <span class="badge bg-primary rounded-pill">Final</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span>Academic Year</span>
+                            <span class="badge bg-primary rounded-pill">2024-2025</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span>Result Date</span>
+                            <span class="badge bg-primary rounded-pill">June 15, 2025</span>
+                        </li>
+                    </ul>
+
+                    <div class="alert alert-info mt-3">
+                        <i class="bi bi-info-circle-fill me-2"></i>
+                        <small>Students can apply for result verification within 15 days of result declaration.</small>
+                    </div>
+
+                    <div class="d-grid gap-2 mt-3">
+                        <a href="#" class="btn btn-outline-primary">
+                            <i class="bi bi-file-pdf me-2"></i>Download Result PDF
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+@section Scripts {
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const ctx = document.getElementById('performanceChart');
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Sem I', 'Sem II', 'Sem III', 'Sem IV'],
+                datasets: [{
+                    label: 'Percentage',
+                    data: [82, 85.2, null, null],
+                    fill: false,
+                    borderColor: '#0d6efd',
+                    tension: 0.1,
+                    pointBackgroundColor: '#0d6efd',
+                    pointRadius: 6
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        min: 60,
+                        max: 100
+                    }
+                },
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function (context) {
+                                return context.raw + '%';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    });
+</script>
+}

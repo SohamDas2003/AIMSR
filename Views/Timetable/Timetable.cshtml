@@ -1,70 +1,366 @@
 ﻿@{
-    ViewData["Title"] = "Timetable";
+ViewData["Title"] = "Timetable";
 }
-<div class="container mt-4">
-    <h2 class="text-center">MCA Semester II Timetable</h2>
-    <p class="text-center">Academic Year: 2024-2026 | Effective from 15th January 2025</p>
 
-    <table class="table table-bordered mt-4">
-        <thead class="table-dark">
-            <tr>
-                <th>Day</th>
-                <th>09:00 - 10:30 AM</th>
-                <th>10:45 - 12:15 PM</th>
-                <th>12:45 - 2:45 PM</th>
-                <th>3:00 - 5:00 PM</th>
-                <th>5:00 - 6:00 PM</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Monday</td>
-                <td>Research Methodology (MCA21) <br> Prof. Rashmi Pathak</td>
-                <td>Research Methodology (MCA21) <br> Prof. Rashmi Pathak</td>
-                <td>AI & ML Lab (MCAL22) <br> Prof. Ramakrishnan Iyer</td>
-                <td>Networking with Linux Lab (MCAL27) <br> Prof. Sweta Nigam</td>
-                <td>-</td>
-            </tr>
-            <tr>
-                <td>Tuesday</td>
-                <td>Artificial Intelligence (MCA22) <br> Prof. Ramakrishnan Iyer</td>
-                <td>Artificial Intelligence (MCA22) <br> Prof. Ramakrishnan Iyer</td>
-                <td>DevOps Lab (MCAL23) <br> Prof. Rashmi Pathak</td>
-                <td>Computer Networks (MCABR4) <br> Prof. Sweta Nigam</td>
-                <td>Mini Project (MCAP21) <br> All Faculty</td>
-            </tr>
-            <tr>
-                <td>Wednesday</td>
-                <td>Robotic Process Automation (MCAE242) <br> Prof. Ramakrishnan Iyer</td>
-                <td>Robotic Process Automation (MCAE242) <br> Prof. Ramakrishnan Iyer</td>
-                <td>Soft Skill Development (MCAL21) <br> Prof. Dinesh Mehra</td>
-                <td>Research Methodology Tutorial (MCA21) <br> Prof. Rashmi Pathak</td>
-                <td>Information System (MCALE252) <br> Dr. Neeta Bhatt</td>
-            </tr>
-            <tr>
-                <td>Thursday</td>
-                <td>Information Security (MCA23) <br> Prof. Sweta Nigam</td>
-                <td>Information Security (MCA23) <br> Prof. Sweta Nigam</td>
-                <td>Robotic Process Automation Lab (MCALE242) <br> Prof. Ramakrishnan Iyer</td>
-                <td>User Interface Lab (MCAL26) <br> Prof. Ramakrishnan Iyer</td>
-                <td>-</td>
-            </tr>
-            <tr>
-                <td>Friday</td>
-                <td>Management Information System (MCALE252) <br> Dr. Neeta Bhatt</td>
-                <td>Management Information System (MCALE252) <br> Dr. Neeta Bhatt</td>
-                <td>Advanced Web Technologies Lab (MCAL25) <br> Prof. Rashmi Pathak</td>
-                <td>Advanced Web Technologies Lab (MCAL25) <br> Prof. Rashmi Pathak</td>
-                <td>-</td>
-            </tr>
-            <tr>
-                <td>Saturday</td>
-                <td>Discrete Mathematics (MCABR5) <br> Prof. Pradep Joshi</td>
-                <td>Discrete Mathematics (MCABR5) <br> Prof. Pradep Joshi</td>
-                <td>Operating System (MCABR) <br> Prof. Sweta Nigam</td>
-                <td>Operating System (MCABR) <br> (1 hour) <br> Prof. Sweta Nigam</td>
-                <td>Computer Network (MCABR4) <br> (1 hour) <br> Prof. Sweta Nigam</td>
-            </tr>
-        </tbody>
-    </table>
+<div class="container mt-4">
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-primary text-white">
+            <h2 class="mb-0 fs-4">MCA Semester II Timetable</h2>
+        </div>
+        <div class="card-body">
+            <p class="text-muted mb-4">Academic Year: 2024-2026 | Effective from 15th January 2025</p>
+
+            <div class="d-flex mb-3 gap-2 flex-wrap">
+                <button class="btn btn-sm btn-primary" onclick="highlightDay('all')">All Days</button>
+                <button class="btn btn-sm btn-outline-primary" onclick="highlightDay('Monday')">Monday</button>
+                <button class="btn btn-sm btn-outline-primary" onclick="highlightDay('Tuesday')">Tuesday</button>
+                <button class="btn btn-sm btn-outline-primary" onclick="highlightDay('Wednesday')">Wednesday</button>
+                <button class="btn btn-sm btn-outline-primary" onclick="highlightDay('Thursday')">Thursday</button>
+                <button class="btn btn-sm btn-outline-primary" onclick="highlightDay('Friday')">Friday</button>
+                <button class="btn btn-sm btn-outline-primary" onclick="highlightDay('Saturday')">Saturday</button>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-bordered timetable-table">
+                    <thead class="table-primary">
+                        <tr>
+                            <th class="text-center" style="width: 100px;">Day</th>
+                            <th class="text-center">09:00 - 10:30 AM</th>
+                            <th class="text-center">10:45 - 12:15 PM</th>
+                            <th class="text-center">12:45 - 2:45 PM</th>
+                            <th class="text-center">3:00 - 5:00 PM</th>
+                            <th class="text-center">5:00 - 6:00 PM</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="day-row" data-day="Monday">
+                            <td class="fw-bold bg-light text-primary">Monday</td>
+                            <td>
+                                <div class="session-card bg-light-subtle">
+                                    <div class="subject">Research Methodology (MCA21)</div>
+                                    <div class="teacher">Prof. Rashmi Pathak</div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="session-card bg-light-subtle">
+                                    <div class="subject">Research Methodology (MCA21)</div>
+                                    <div class="teacher">Prof. Rashmi Pathak</div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="session-card bg-info-subtle">
+                                    <div class="subject">AI & ML Lab (MCAL22)</div>
+                                    <div class="teacher">Prof. Ramakrishnan Iyer</div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="session-card bg-warning-subtle">
+                                    <div class="subject">Networking with Linux Lab (MCAL27)</div>
+                                    <div class="teacher">Prof. Sweta Nigam</div>
+                                </div>
+                            </td>
+                            <td>-</td>
+                        </tr>
+                        <tr class="day-row" data-day="Tuesday">
+                            <td class="fw-bold bg-light text-primary">Tuesday</td>
+                            <td>
+                                <div class="session-card bg-success-subtle">
+                                    <div class="subject">Artificial Intelligence (MCA22)</div>
+                                    <div class="teacher">Prof. Ramakrishnan Iyer</div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="session-card bg-success-subtle">
+                                    <div class="subject">Artificial Intelligence (MCA22)</div>
+                                    <div class="teacher">Prof. Ramakrishnan Iyer</div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="session-card bg-info-subtle">
+                                    <div class="subject">DevOps Lab (MCAL23)</div>
+                                    <div class="teacher">Prof. Rashmi Pathak</div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="session-card bg-warning-subtle">
+                                    <div class="subject">Computer Networks (MCABR4)</div>
+                                    <div class="teacher">Prof. Sweta Nigam</div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="session-card bg-danger-subtle">
+                                    <div class="subject">Mini Project (MCAP21)</div>
+                                    <div class="teacher">All Faculty</div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="day-row" data-day="Wednesday">
+                            <td class="fw-bold bg-light text-primary">Wednesday</td>
+                            <td>
+                                <div class="session-card bg-success-subtle">
+                                    <div class="subject">Robotic Process Automation (MCAE242)</div>
+                                    <div class="teacher">Prof. Ramakrishnan Iyer</div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="session-card bg-success-subtle">
+                                    <div class="subject">Robotic Process Automation (MCAE242)</div>
+                                    <div class="teacher">Prof. Ramakrishnan Iyer</div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="session-card bg-secondary-subtle">
+                                    <div class="subject">Soft Skill Development (MCAL21)</div>
+                                    <div class="teacher">Prof. Dinesh Mehra</div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="session-card bg-light-subtle">
+                                    <div class="subject">Research Methodology Tutorial (MCA21)</div>
+                                    <div class="teacher">Prof. Rashmi Pathak</div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="session-card bg-primary-subtle">
+                                    <div class="subject">Information System (MCALE252)</div>
+                                    <div class="teacher">Dr. Neeta Bhatt</div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="day-row" data-day="Thursday">
+                            <td class="fw-bold bg-light text-primary">Thursday</td>
+                            <td>
+                                <div class="session-card bg-danger-subtle">
+                                    <div class="subject">Information Security (MCA23)</div>
+                                    <div class="teacher">Prof. Sweta Nigam</div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="session-card bg-danger-subtle">
+                                    <div class="subject">Information Security (MCA23)</div>
+                                    <div class="teacher">Prof. Sweta Nigam</div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="session-card bg-success-subtle">
+                                    <div class="subject">Robotic Process Automation Lab (MCALE242)</div>
+                                    <div class="teacher">Prof. Ramakrishnan Iyer</div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="session-card bg-warning-subtle">
+                                    <div class="subject">User Interface Lab (MCAL26)</div>
+                                    <div class="teacher">Prof. Ramakrishnan Iyer</div>
+                                </div>
+                            </td>
+                            <td>-</td>
+                        </tr>
+                        <tr class="day-row" data-day="Friday">
+                            <td class="fw-bold bg-light text-primary">Friday</td>
+                            <td>
+                                <div class="session-card bg-primary-subtle">
+                                    <div class="subject">Management Information System (MCALE252)</div>
+                                    <div class="teacher">Dr. Neeta Bhatt</div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="session-card bg-primary-subtle">
+                                    <div class="subject">Management Information System (MCALE252)</div>
+                                    <div class="teacher">Dr. Neeta Bhatt</div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="session-card bg-info-subtle">
+                                    <div class="subject">Advanced Web Technologies Lab (MCAL25)</div>
+                                    <div class="teacher">Prof. Rashmi Pathak</div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="session-card bg-info-subtle">
+                                    <div class="subject">Advanced Web Technologies Lab (MCAL25)</div>
+                                    <div class="teacher">Prof. Rashmi Pathak</div>
+                                </div>
+                            </td>
+                            <td>-</td>
+                        </tr>
+                        <tr class="day-row" data-day="Saturday">
+                            <td class="fw-bold bg-light text-primary">Saturday</td>
+                            <td>
+                                <div class="session-card bg-secondary-subtle">
+                                    <div class="subject">Discrete Mathematics (MCABR5)</div>
+                                    <div class="teacher">Prof. Pradep Joshi</div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="session-card bg-secondary-subtle">
+                                    <div class="subject">Discrete Mathematics (MCABR5)</div>
+                                    <div class="teacher">Prof. Pradep Joshi</div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="session-card bg-warning-subtle">
+                                    <div class="subject">Operating System (MCABR)</div>
+                                    <div class="teacher">Prof. Sweta Nigam</div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="session-card bg-warning-subtle">
+                                    <div class="subject">Operating System (MCABR) (1 hour)</div>
+                                    <div class="teacher">Prof. Sweta Nigam</div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="session-card bg-warning-subtle">
+                                    <div class="subject">Computer Network (MCABR4) (1 hour)</div>
+                                    <div class="teacher">Prof. Sweta Nigam</div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Class Information</h5>
+        </div>
+        <div class="card-body">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="bi bi-book me-2"></i>Course Details</h5>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Program
+                                    <span class="badge bg-primary rounded-pill">MCA</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Semester
+                                    <span class="badge bg-primary rounded-pill">II</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Batch
+                                    <span class="badge bg-primary rounded-pill">2024-2026</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="bi bi-building me-2"></i>Classroom Locations</h5>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Lectures
+                                    <span>Room 301, Block B</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Labs
+                                    <span>Computer Lab 2, Block C</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Tutorials
+                                    <span>Room 201, Block B</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="bi bi-info-circle me-2"></i>Important Information</h5>
+                            <div class="alert alert-info mb-0">
+                                <ul class="mb-0 ps-3">
+                                    <li>The timetable is subject to change. Check regularly for updates.</li>
+                                    <li>Students are expected to be in class 5 minutes before the scheduled time.</li>
+                                    <li>Saturday classes may be rescheduled in case of holidays.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+<style>
+    .session-card {
+        padding: 10px;
+        border-radius: 8px;
+        height: 100%;
+    }
+
+    .subject {
+        font-weight: 500;
+        margin-bottom: 5px;
+    }
+
+    .teacher {
+        font-size: 0.85rem;
+        color: #666;
+    }
+
+    .timetable-table td {
+        vertical-align: middle;
+        padding: 10px;
+        min-width: 150px;
+    }
+
+    .highlighted-row {
+        box-shadow: 0 0 15px rgba(13, 110, 253, 0.3);
+        transform: scale(1.01);
+        z-index: 1;
+        position: relative;
+        transition: all 0.3s ease;
+    }
+
+    .day-row {
+        transition: all 0.3s ease;
+    }
+
+    .fade-row {
+        opacity: 0.5;
+    }
+</style>
+
+@section Scripts {
+<script>
+    function highlightDay(day) {
+        // Reset all rows
+        document.querySelectorAll('.day-row').forEach(row => {
+            row.classList.remove('highlighted-row');
+            row.classList.remove('fade-row');
+        });
+
+        // Reset all buttons
+        document.querySelectorAll('.btn-primary').forEach(btn => {
+            btn.classList.remove('btn-primary');
+            btn.classList.add('btn-outline-primary');
+        });
+
+        if (day === 'all') {
+            // Highlight the 'All Days' button
+            document.querySelector('button[onclick="highlightDay(\'all\')"]').classList.remove('btn-outline-primary');
+            document.querySelector('button[onclick="highlightDay(\'all\')"]').classList.add('btn-primary');
+            return;
+        }
+
+        // Highlight selected day and button
+        document.querySelector(`tr[data-day="${day}"]`).classList.add('highlighted-row');
+        document.querySelectorAll('.day-row').forEach(row => {
+            if (row.getAttribute('data-day') !== day) {
+                row.classList.add('fade-row');
+            }
+        });
+
+        document.querySelector(`button[onclick="highlightDay('${day}')"]`).classList.remove('btn-outline-primary');
+        document.querySelector(`button[onclick="highlightDay('${day}')"]`).classList.add('btn-primary');
+    }
+</script>
+}

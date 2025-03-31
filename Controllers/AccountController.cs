@@ -1,6 +1,7 @@
 using AIMSR.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
 namespace AIMSR.Controllers
@@ -29,6 +30,16 @@ namespace AIMSR.Controllers
         {
             if (ModelState.IsValid)
             {
+                // Validate the StudentId is not already taken
+                var existingUser = await _userManager.Users
+                    .FirstOrDefaultAsync(u => u.StudentId == model.StudentId);
+                
+                if (existingUser != null)
+                {
+                    ModelState.AddModelError("StudentId", "This Student ID/Roll No is already in use.");
+                    return View(model);
+                }
+                
                 var user = new ApplicationUser
                 {
                     UserName = model.Email,
@@ -36,7 +47,8 @@ namespace AIMSR.Controllers
                     FullName = model.FullName,
                     StudentId = model.StudentId,
                     Course = model.Course,
-                    Department = model.Department
+                    DateOfBirth = model.DateOfBirth,
+                    Gender = model.Gender
                 };
 
                 var result = await _userManager.CreateAsync(user, model.Password);
@@ -69,7 +81,7 @@ namespace AIMSR.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
                     return RedirectToAction("Index", "Student");

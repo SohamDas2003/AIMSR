@@ -1,0 +1,92 @@
+@{
+ViewData["Title"] = "Application Submitted Successfully";
+}
+
+<div class="container mt-5">
+    <div class="card shadow border-success">
+        <div class="card-header bg-success text-white">
+            <h3 class="card-title mb-0">Application Submitted Successfully!</h3>
+        </div>
+        <div class="card-body text-center">
+            <div class="mb-4">
+                <i class="bi bi-check-circle-fill text-success" style="font-size: 5rem;"></i>
+            </div>
+
+            <h4 class="mb-3">Thank you, @(string.IsNullOrEmpty(ViewBag.Name) ? "Applicant" : ViewBag.Name)!</h4>
+
+            <p class="lead mb-4">
+                Your admission application has been submitted successfully. We appreciate your interest in joining our
+                institution.
+            </p>
+
+            <div class="alert alert-info">
+                <div class="d-flex align-items-center">
+                    <i class="bi bi-info-circle-fill me-2"></i>
+                    <div>
+                        <strong>What happens next?</strong><br>
+                        Our admissions team will review your application and contact you via email or phone within 3-5
+                        business days.
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Application Reference</h5>
+                    <p class="card-text">Your application reference number is:
+                        <strong>AIMSR-@DateTime.Now.ToString("yyyyMMdd")-@(new Random().Next(1000, 9999))</strong></p>
+                    <p class="card-text text-muted">Please save this number for future reference.</p>
+                </div>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <i class="bi bi-envelope-fill text-primary mb-3" style="font-size: 2rem;"></i>
+                            <h5 class="card-title">Confirmation Email</h5>
+                            <p class="card-text">A confirmation email has been sent to your registered email address.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <i class="bi bi-calendar-check-fill text-primary mb-3" style="font-size: 2rem;"></i>
+                            <h5 class="card-title">Interview Schedule</h5>
+                            <p class="card-text">If shortlisted, you will receive an email with your interview schedule.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <i class="bi bi-question-circle-fill text-primary mb-3" style="font-size: 2rem;"></i>
+                            <h5 class="card-title">Questions?</h5>
+                            <p class="card-text">Contact our admissions office at admissions@aimsr.edu.in</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                <a href="/" class="btn btn-primary me-md-2">
+                    <i class="bi bi-house-fill"></i> Return to Home
+                </a>
+                <a href="/Pages/Index?page=Admission" class="btn btn-outline-secondary">
+                    <i class="bi bi-file-earmark-plus"></i> Submit Another Application
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+    $(document).ready(function () {
+        // You could add confetti or other effects here
+    });
+</script>
+}

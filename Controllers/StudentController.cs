@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using AIMSR.Models;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace AIMSR.Controllers
@@ -34,8 +33,8 @@ namespace AIMSR.Controllers
                 Email = user.Email,
                 StudentId = user.StudentId,
                 Course = user.Course,
-                Department = user.Department
-                // You can set other properties from your database or hardcode sample data
+                DateOfBirth = user.DateOfBirth,
+                Gender = user.Gender,
             };
             
             return View(viewModel);

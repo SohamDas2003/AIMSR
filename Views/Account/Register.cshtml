@@ -1,14 +1,14 @@
 @model AIMSR.Models.RegisterViewModel
 
 @{
-ViewData["Title"] = "Register";
+    ViewData["Title"] = "Register";
 }
 
 <div class="row justify-content-center mt-5">
-    <div class="col-md-8">
+    <div class="col-md-10">
         <div class="card shadow">
             <div class="card-header bg-primary text-white">
-                <h4 class="mb-0">Register</h4>
+                <h4 class="mb-0">Student Registration</h4>
             </div>
             <div class="card-body p-4">
                 <form asp-action="Register" method="post">
@@ -29,22 +29,40 @@ ViewData["Title"] = "Register";
                     </div>
 
                     <div class="row">
-                        <div class="col-md-4 mb-3">
-                            <label asp-for="StudentId" class="form-label">Student ID</label>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="StudentId" class="form-label">Student ID/Roll No</label>
                             <input asp-for="StudentId" class="form-control" />
                             <span asp-validation-for="StudentId" class="text-danger"></span>
                         </div>
-
-                        <div class="col-md-4 mb-3">
-                            <label asp-for="Course" class="form-label">Course</label>
-                            <input asp-for="Course" class="form-control" />
-                            <span asp-validation-for="Course" class="text-danger"></span>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="DateOfBirth" class="form-label">Date of Birth</label>
+                            <input asp-for="DateOfBirth" type="date" class="form-control" />
+                            <span asp-validation-for="DateOfBirth" class="text-danger"></span>
                         </div>
+                    </div>
 
-                        <div class="col-md-4 mb-3">
-                            <label asp-for="Department" class="form-label">Department</label>
-                            <input asp-for="Department" class="form-control" />
-                            <span asp-validation-for="Department" class="text-danger"></span>
+                    <div class="row">
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Gender" class="form-label">Gender</label>
+                            <select asp-for="Gender" class="form-select">
+                                <option value="">-- Select Gender --</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+                            <span asp-validation-for="Gender" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Course" class="form-label">Course</label>
+                            <select asp-for="Course" class="form-select">
+                                <option value="">-- Select Course --</option>
+                                <option value="MCA">MCA</option>
+                                <option value="MMS">MMS</option>
+                                <option value="BMS">BMS</option>
+                                <option value="PGDM">PGDM</option>
+                            </select>
+                            <span asp-validation-for="Course" class="text-danger"></span>
                         </div>
                     </div>
 
@@ -62,11 +80,11 @@ ViewData["Title"] = "Register";
                         </div>
                     </div>
 
-                    <div class="mb-3">
+                    <div class="d-grid gap-2">
                         <button type="submit" class="btn btn-primary">Register</button>
                     </div>
 
-                    <div class="text-center">
+                    <div class="text-center mt-3">
                         <p>Already have an account? <a asp-action="Login">Login here</a></p>
                     </div>
                 </form>
@@ -76,5 +94,7 @@ ViewData["Title"] = "Register";
 </div>
 
 @section Scripts {
-@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

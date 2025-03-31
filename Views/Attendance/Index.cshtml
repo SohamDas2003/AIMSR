@@ -1,0 +1,180 @@
+@model List<AIMSR.Models.Attendance>
+
+    @{
+    ViewData["Title"] = "Attendance";
+
+    // Calculate attendance statistics
+    int totalDays = Model.Select(a => a.Date.Date).Distinct().Count();
+    int presentDays = Model.Where(a => a.Status == "Present").Select(a => a.Date.Date).Distinct().Count();
+    int absentDays = totalDays - presentDays;
+    double attendancePercentage = totalDays > 0 ? Math.Round((double)presentDays / totalDays * 100, 2) : 0;
+
+    // Get unique subjects
+    var subjects = Model.Select(a => a.Subject).Distinct().ToList();
+
+    // Group by date
+    var attendanceByDate = Model
+    .GroupBy(a => a.Date.Date)
+    .OrderByDescending(g => g.Key)
+    .ToList();
+    }
+
+    <div class="container mt-4">
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-primary text-white">
+                <h2 class="mb-0 fs-4">Attendance Report</h2>
+            </div>
+            <div class="card-body p-0">
+                <div class="row g-0">
+                    <div class="col-md-3 border-end">
+                        <div class="p-4 text-center">
+                            <div class="display-1 mb-2 text-primary fw-bold">@attendancePercentage%</div>
+                            <p class="text-muted">Overall Attendance</p>
+                            <div class="progress mb-4" style="height: 8px;">
+                                <div class="progress-bar @(attendancePercentage >= 75 ? " bg-success" :
+                                    attendancePercentage>= 60 ? "bg-warning" : "bg-danger")"
+                                    role="progressbar" style="width: @attendancePercentage%;">
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between text-muted small">
+                                <span>0%</span>
+                                <span>50%</span>
+                                <span>100%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="p-4">
+                            <div class="row g-4">
+                                <div class="col-md-4">
+                                    <div class="card bg-light h-100">
+                                        <div class="card-body text-center">
+                                            <div class="display-5 mb-2 text-dark">@totalDays</div>
+                                            <p class="mb-0 text-muted">Total Classes</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card bg-success bg-opacity-10 h-100">
+                                        <div class="card-body text-center">
+                                            <div class="display-5 mb-2 text-success">@presentDays</div>
+                                            <p class="mb-0 text-muted">Present</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card bg-danger bg-opacity-10 h-100">
+                                        <div class="card-body text-center">
+                                            <div class="display-5 mb-2 text-danger">@absentDays</div>
+                                            <p class="mb-0 text-muted">Absent</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Subject-wise Attendance</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    @foreach (var subject in subjects)
+                    {
+                    var subjectAttendance = Model.Where(a => a.Subject == subject).ToList();
+                    var subjectTotal = subjectAttendance.Count;
+                    var subjectPresent = subjectAttendance.Count(a => a.Status == "Present");
+                    var subjectPercentage = subjectTotal > 0 ? Math.Round((double)subjectPresent / subjectTotal * 100,
+                    2) : 0;
+                    var statusClass = subjectPercentage >= 75 ? "success" : subjectPercentage >= 60 ? "warning" :
+                    "danger";
+
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100 border-@statusClass border-opacity-25">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h5 class="card-title mb-0">@subject</h5>
+                                    <span class="badge bg-@statusClass">@subjectPercentage%</span>
+                                </div>
+                                <div class="progress mb-3" style="height: 8px;">
+                                    <div class="progress-bar bg-@statusClass" role="progressbar"
+                                        style="width: @subjectPercentage%;">
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <small class="text-muted">Present: @subjectPresent</small>
+                                    <small class="text-muted">Total: @subjectTotal</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Detailed Attendance Records</h5>
+                <button class="btn btn-sm btn-light" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#attendanceDetails">
+                    <i class="bi bi-chevron-down"></i> Show/Hide
+                </button>
+            </div>
+            <div id="attendanceDetails" class="collapse">
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Subject</th>
+                                    <th class="text-center">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var group in attendanceByDate)
+                                {
+                                <tr class="table-secondary">
+                                    <td colspan="3" class="fw-bold">@group.Key.ToString("dddd, MMMM d, yyyy")</td>
+                                </tr>
+
+                                @foreach (var record in group.OrderBy(r => r.Subject))
+                                {
+                                <tr>
+                                    <td></td>
+                                    <td>@record.Subject</td>
+                                    <td class="text-center">
+                                        <span class="badge @(record.Status == " Present" ? "bg-success" : "bg-danger"
+                                            )">
+                                            @record.Status
+                                        </span>
+                                    </td>
+                                </tr>
+                                }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @section Scripts {
+    <script>
+        $(document).ready(function () {
+            // Auto-expand the attendance details on first load
+            $('#attendanceDetails').collapse('show');
+
+            // Toggle icon when clicking the button
+            $('[data-bs-toggle="collapse"]').click(function () {
+                $(this).find('i').toggleClass('bi-chevron-down bi-chevron-up');
+            });
+        });
+    </script>
+    }

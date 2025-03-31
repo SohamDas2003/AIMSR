@@ -36,10 +36,10 @@ ViewData["Title"] = "AIMSR";
                         <a class="nav-link" asp-controller="Pages" asp-action="Index"
                             asp-route-page="Admission">Admissions</a>
                     </li>
-                    @if (User.Identity.IsAuthenticated)
+                    @if (User.Identity != null && User.Identity.IsAuthenticated)
                     {
                     <li class="nav-item">
-                        <a class="nav-link" href="/Profile">Profile</a>
+                        <a class="nav-link" asp-controller="Student" asp-action="Index">Dashboard</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" asp-controller="Account" asp-action="LogoutGet">Logout</a>

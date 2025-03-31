@@ -13,7 +13,8 @@ ViewData["Title"] = "Student Dashboard";
                 </div>
                 <div class="card-body">
                     <div class="text-center mb-3">
-                        <img src="https://via.placeholder.com/150" class="rounded-circle" alt="Profile Picture">
+                        <img src="~/images/profilepic.jpg" class="rounded-circle" alt="Profile Picture" width="120"
+                            height="120">
                     </div>
                     <h4 class="text-center">@Model.FullName</h4>
                     <p class="text-center text-muted">@Model.Email</p>
@@ -21,16 +22,16 @@ ViewData["Title"] = "Student Dashboard";
                     <hr>
 
                     <div class="mb-2">
-                        <strong>Student ID:</strong> @(Model.StudentId ?? "Not Available")
+                        <strong>Student ID:</strong> @Model.StudentId
                     </div>
                     <div class="mb-2">
-                        <strong>Course:</strong> @(Model.Course ?? "Not Available")
+                        <strong>Course:</strong> @Model.Course
                     </div>
                     <div class="mb-2">
-                        <strong>Department:</strong> @(Model.Department ?? "Not Available")
+                        <strong>Gender:</strong> @Model.Gender
                     </div>
                     <div class="mb-2">
-                        <strong>Semester:</strong> @(Model.Semester?.ToString() ?? "Not Available")
+                        <strong>Date of Birth:</strong> @Model.DateOfBirth.ToString("dd-MM-yyyy")
                     </div>
                 </div>
             </div>
@@ -45,38 +46,20 @@ ViewData["Title"] = "Student Dashboard";
                     <div class="row">
                         <div class="col-md-4 mb-3">
                             <a href="/Attendance" class="btn btn-outline-primary w-100 p-3">
-                                <i class="bi bi-calendar-check"></i>
-                                <div>Attendance</div>
-                            </a>
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <a href="/Marks" class="btn btn-outline-primary w-100 p-3">
-                                <i class="bi bi-award"></i>
-                                <div>Marks</div>
-                            </a>
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <a href="/Fees" class="btn btn-outline-primary w-100 p-3">
-                                <i class="bi bi-cash-stack"></i>
-                                <div>Fees</div>
+                                <i class="bi bi-calendar-check fs-4 mb-2"></i>
+                                <div class="fw-bold">Attendance</div>
                             </a>
                         </div>
                         <div class="col-md-4 mb-3">
                             <a href="/Timetable" class="btn btn-outline-primary w-100 p-3">
-                                <i class="bi bi-clock"></i>
-                                <div>Timetable</div>
+                                <i class="bi bi-clock fs-4 mb-2"></i>
+                                <div class="fw-bold">Timetable</div>
                             </a>
                         </div>
                         <div class="col-md-4 mb-3">
-                            <a href="/Library" class="btn btn-outline-primary w-100 p-3">
-                                <i class="bi bi-book"></i>
-                                <div>Library</div>
-                            </a>
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <a href="/Profile" class="btn btn-outline-primary w-100 p-3">
-                                <i class="bi bi-person"></i>
-                                <div>Profile</div>
+                            <a href="/Marks" class="btn btn-outline-primary w-100 p-3">
+                                <i class="bi bi-award fs-4 mb-2"></i>
+                                <div class="fw-bold">Marks</div>
                             </a>
                         </div>
                     </div>
