@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace AIMSR.Models
 {
@@ -11,11 +12,17 @@ namespace AIMSR.Models
         public int RollNo { get; set; }
 
         [Required]
-        public DateTime Date { get; set; }
+        public string StudentId { get; set; } = string.Empty;
 
-        public string? Subject { get; set; } // Nullable to avoid CS8618 error
+        [Required]
+        public DateTime Date { get; set; } = DateTime.Now;
+
+        [Required]
+        public string Subject { get; set; } = string.Empty;
 
         [Required]
         public string Status { get; set; } = "Absent"; // Default value to avoid null
+
+        public string? Notes { get; set; }
     }
 }

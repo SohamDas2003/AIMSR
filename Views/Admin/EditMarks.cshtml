@@ -1,0 +1,216 @@
+@model AIMSR.Models.Marks
+
+@{
+ViewData["Title"] = "Edit Marks Record";
+}
+
+<div class="container mt-4">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h2 class="mb-0 fs-4">Edit Academic Result</h2>
+        </div>
+        <div class="card-body">
+            <form asp-action="EditMarks" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <input type="hidden" asp-for="Id" />
+                <input type="hidden" asp-for="StudentId" />
+
+                <div class="mb-3">
+                    <label class="form-label">Student</label>
+                    <input type="text" class="form-control" value="@ViewBag.StudentName" readonly />
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Subject" class="form-label">Subject</label>
+                    <select asp-for="Subject" class="form-select" asp-items="ViewBag.Subjects" required>
+                        <option value="">-- Select Subject --</option>
+                    </select>
+                    <span asp-validation-for="Subject" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="ExamType" class="form-label">Exam Type</label>
+                    <select asp-for="ExamType" class="form-select" required>
+                        <option value="">-- Select Exam Type --</option>
+                        <option value="Midterm">Midterm</option>
+                        <option value="Final">Final</option>
+                        <option value="Quiz">Quiz</option>
+                        <option value="Assignment">Assignment</option>
+                        <option value="Project">Project</option>
+                        <option value="Lab">Lab</option>
+                    </select>
+                    <span asp-validation-for="ExamType" class="text-danger"></span>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="ObtainedMarks" class="form-label">Obtained Marks</label>
+                            <input asp-for="ObtainedMarks" class="form-control" type="number" min="0" required />
+                            <span asp-validation-for="ObtainedMarks" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="MaxMarks" class="form-label">Maximum Marks</label>
+                            <input asp-for="MaxMarks" class="form-control" type="number" min="1" required />
+                            <span asp-validation-for="MaxMarks" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="ExamDate" class="form-label">Exam Date</label>
+                    <input asp-for="ExamDate" class="form-control" type="date" required />
+                    <span asp-validation-for="ExamDate" class="text-danger"></span>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="Semester" class="form-label">Semester</label>
+                            <select asp-for="Semester" class="form-select" required>
+                                <option value="">-- Select Semester --</option>
+                                <option value="I">Semester I</option>
+                                <option value="II">Semester II</option>
+                                <option value="III">Semester III</option>
+                                <option value="IV">Semester IV</option>
+                                <option value="V">Semester V</option>
+                                <option value="VI">Semester VI</option>
+                                <option value="VII">Semester VII</option>
+                                <option value="VIII">Semester VIII</option>
+                            </select>
+                            <span asp-validation-for="Semester" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="AcademicYear" class="form-label">Academic Year</label>
+                            <input asp-for="AcademicYear" class="form-control" placeholder="e.g. 2023-2024" required />
+                            <span asp-validation-for="AcademicYear" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Remarks" class="form-label">Remarks (Optional)</label>
+                    <textarea asp-for="Remarks" class="form-control" rows="3"
+                        placeholder="Any additional remarks about student's performance"></textarea>
+                    <span asp-validation-for="Remarks" class="text-danger"></span>
+                </div>
+
+                <!-- Performance Visualization (Read-only) -->
+                @{
+                var percentage = Model.MaxMarks > 0 ? ((double)Model.ObtainedMarks / (double)Model.MaxMarks) * 100 : 0;
+                var percentClass = percentage >= 75 ? "bg-success" :
+                (percentage >= 60 ? "bg-info" :
+                (percentage >= 40 ? "bg-warning" : "bg-danger"));
+                var grade = percentage >= 90 ? "A+" :
+                percentage >= 80 ? "A" :
+                percentage >= 70 ? "B+" :
+                percentage >= 60 ? "B" :
+                percentage >= 50 ? "C" :
+                percentage >= 40 ? "D" : "F";
+                }
+                <div class="card mb-3 border-0 bg-light">
+                    <div class="card-body">
+                        <h5 class="card-title">Performance Preview</h5>
+                        <div class="row align-items-center">
+                            <div class="col-md-8">
+                                <div class="progress" style="height: 25px;">
+                                    <div class="progress-bar @percentClass" role="progressbar"
+                                        style="width: @percentage%;" aria-valuenow="@percentage" aria-valuemin="0"
+                                        aria-valuemax="100">
+                                        @percentage.ToString("0.00")%
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <div class="badge @percentClass p-3 fs-5">
+                                    Grade: @grade
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-check-circle me-1"></i> Update Record
+                    </button>
+                    <a asp-action="ManageMarks" class="btn btn-outline-secondary">
+                        <i class="bi bi-x-circle me-1"></i> Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="mt-3">
+        <a asp-action="ManageMarks" class="btn btn-outline-primary">
+            <i class="bi bi-arrow-left me-2"></i> Back to Academic Results Management
+        </a>
+    </div>
+</div>
+
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+<script>
+    // Real-time performance preview update
+    document.getElementById('ObtainedMarks').addEventListener('input', updatePerformance);
+    document.getElementById('MaxMarks').addEventListener('input', updatePerformance);
+
+    function updatePerformance() {
+        var obtainedMarks = parseFloat(document.getElementById('ObtainedMarks').value) || 0;
+        var maxMarks = parseFloat(document.getElementById('MaxMarks').value) || 1;
+
+        if (maxMarks < 1) maxMarks = 1;
+        if (obtainedMarks > maxMarks) obtainedMarks = maxMarks;
+
+        var percentage = (obtainedMarks / maxMarks) * 100;
+        var progressBar = document.querySelector('.progress-bar');
+        var gradeBadge = document.querySelector('.badge.p-3');
+
+        // Update percentage display
+        progressBar.style.width = percentage + '%';
+        progressBar.setAttribute('aria-valuenow', percentage);
+        progressBar.textContent = percentage.toFixed(2) + '%';
+
+        // Update color class
+        progressBar.className = 'progress-bar';
+        gradeBadge.className = 'badge p-3 fs-5';
+
+        var colorClass = '';
+        if (percentage >= 75) colorClass = 'bg-success';
+        else if (percentage >= 60) colorClass = 'bg-info';
+        else if (percentage >= 40) colorClass = 'bg-warning';
+        else colorClass = 'bg-danger';
+
+        progressBar.classList.add(colorClass);
+        gradeBadge.classList.add(colorClass);
+
+        // Update grade
+        var grade = 'F';
+        if (percentage >= 90) grade = 'A+';
+        else if (percentage >= 80) grade = 'A';
+        else if (percentage >= 70) grade = 'B+';
+        else if (percentage >= 60) grade = 'B';
+        else if (percentage >= 50) grade = 'C';
+        else if (percentage >= 40) grade = 'D';
+
+        gradeBadge.textContent = 'Grade: ' + grade;
+    }
+
+    // Validate that obtained marks are not greater than maximum marks
+    document.querySelector('form').addEventListener('submit', function (e) {
+        var obtainedMarks = parseInt(document.getElementById('ObtainedMarks').value);
+        var maxMarks = parseInt(document.getElementById('MaxMarks').value);
+
+        if (obtainedMarks > maxMarks) {
+            e.preventDefault();
+            alert('Obtained marks cannot be greater than maximum marks.');
+        }
+    });
+</script>
+}

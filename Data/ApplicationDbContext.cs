@@ -11,5 +11,6 @@ namespace AIMSR.Data
         {
         }
         public DbSet<Attendance> Attendance { get; set; }
+        public DbSet<Marks> Marks { get; set; }
     }
 }

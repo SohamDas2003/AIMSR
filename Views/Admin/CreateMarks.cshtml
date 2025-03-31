@@ -1,0 +1,136 @@
+@model AIMSR.Models.Marks
+
+@{
+ViewData["Title"] = "Create Marks Record";
+}
+
+<div class="container mt-4">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h2 class="mb-0 fs-4">Create Academic Result</h2>
+        </div>
+        <div class="card-body">
+            <form asp-action="CreateMarks" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div class="mb-3">
+                    <label asp-for="StudentId" class="form-label">Student</label>
+                    <select asp-for="StudentId" class="form-select" asp-items="ViewBag.Students" required>
+                        <option value="">-- Select Student --</option>
+                    </select>
+                    <span asp-validation-for="StudentId" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Subject" class="form-label">Subject</label>
+                    <select asp-for="Subject" class="form-select" asp-items="ViewBag.Subjects" required>
+                        <option value="">-- Select Subject --</option>
+                    </select>
+                    <span asp-validation-for="Subject" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="ExamType" class="form-label">Exam Type</label>
+                    <select asp-for="ExamType" class="form-select" required>
+                        <option value="">-- Select Exam Type --</option>
+                        <option value="Midterm">Midterm</option>
+                        <option value="Final">Final</option>
+                        <option value="Quiz">Quiz</option>
+                        <option value="Assignment">Assignment</option>
+                        <option value="Project">Project</option>
+                        <option value="Lab">Lab</option>
+                    </select>
+                    <span asp-validation-for="ExamType" class="text-danger"></span>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="ObtainedMarks" class="form-label">Obtained Marks</label>
+                            <input asp-for="ObtainedMarks" class="form-control" type="number" min="0" required />
+                            <span asp-validation-for="ObtainedMarks" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="MaxMarks" class="form-label">Maximum Marks</label>
+                            <input asp-for="MaxMarks" class="form-control" type="number" min="1" required />
+                            <span asp-validation-for="MaxMarks" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="ExamDate" class="form-label">Exam Date</label>
+                    <input asp-for="ExamDate" class="form-control" type="date" required />
+                    <span asp-validation-for="ExamDate" class="text-danger"></span>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="Semester" class="form-label">Semester</label>
+                            <select asp-for="Semester" class="form-select" required>
+                                <option value="">-- Select Semester --</option>
+                                <option value="I">Semester I</option>
+                                <option value="II">Semester II</option>
+                                <option value="III">Semester III</option>
+                                <option value="IV">Semester IV</option>
+                                <option value="V">Semester V</option>
+                                <option value="VI">Semester VI</option>
+                                <option value="VII">Semester VII</option>
+                                <option value="VIII">Semester VIII</option>
+                            </select>
+                            <span asp-validation-for="Semester" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="AcademicYear" class="form-label">Academic Year</label>
+                            <input asp-for="AcademicYear" class="form-control" placeholder="e.g. 2023-2024" required />
+                            <span asp-validation-for="AcademicYear" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Remarks" class="form-label">Remarks (Optional)</label>
+                    <textarea asp-for="Remarks" class="form-control" rows="3"
+                        placeholder="Any additional remarks about student's performance"></textarea>
+                    <span asp-validation-for="Remarks" class="text-danger"></span>
+                </div>
+
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-check-circle me-1"></i> Create Record
+                    </button>
+                    <a asp-action="ManageMarks" class="btn btn-outline-secondary">
+                        <i class="bi bi-x-circle me-1"></i> Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="mt-3">
+        <a asp-action="ManageMarks" class="btn btn-outline-primary">
+            <i class="bi bi-arrow-left me-2"></i> Back to Academic Results Management
+        </a>
+    </div>
+</div>
+
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+<script>
+    // Validate that obtained marks are not greater than maximum marks
+    document.querySelector('form').addEventListener('submit', function (e) {
+        var obtainedMarks = parseInt(document.getElementById('ObtainedMarks').value);
+        var maxMarks = parseInt(document.getElementById('MaxMarks').value);
+
+        if (obtainedMarks > maxMarks) {
+            e.preventDefault();
+            alert('Obtained marks cannot be greater than maximum marks.');
+        }
+    });
+</script>
+}

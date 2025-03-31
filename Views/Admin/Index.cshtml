@@ -1,0 +1,58 @@
+@{
+ViewData["Title"] = "Admin Dashboard";
+}
+
+<div class="container mt-4">
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-primary text-white">
+            <h2 class="mb-0">Admin Dashboard</h2>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <i class="bi bi-person-badge fs-1 text-primary mb-3"></i>
+                            <h4>User Management</h4>
+                            <p class="text-muted">Manage users and their roles</p>
+                            <div class="d-grid gap-2">
+                                <a asp-action="Users" class="btn btn-outline-primary">Manage Users</a>
+                                <a asp-action="Roles" class="btn btn-outline-primary">Manage Roles</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <i class="bi bi-calendar-check fs-1 text-success mb-3"></i>
+                            <h4>Attendance Management</h4>
+                            <p class="text-muted">Monitor and update student attendance</p>
+                            <div class="d-grid gap-2">
+                                <a asp-action="ManageAttendance" class="btn btn-outline-success">View Attendance</a>
+                                <a asp-action="CreateAttendance" class="btn btn-outline-success">Add Attendance</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <i class="bi bi-card-checklist fs-1 text-danger mb-3"></i>
+                            <h4>Marks Management</h4>
+                            <p class="text-muted">Manage student academic records</p>
+                            <div class="d-grid gap-2">
+                                <a asp-action="ManageMarks" class="btn btn-outline-danger">View Marks</a>
+                                <a asp-action="CreateMarks" class="btn btn-outline-danger">Add Marks</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+</div>

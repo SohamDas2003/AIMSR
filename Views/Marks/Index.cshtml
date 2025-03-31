@@ -1,0 +1,215 @@
+@model List<AIMSR.Models.Marks>
+
+    @{
+    ViewData["Title"] = "Academic Results";
+
+    // Calculate statistics only if there are marks
+    decimal totalObtained = 0;
+    decimal totalMaximum = 0;
+    decimal percentage = 0;
+    int subjectCount = 0;
+    var subjectGroups = new List<IGrouping<string, AIMSR.Models.Marks>>();
+
+        if (Model.Any())
+        {
+        totalObtained = Model.Sum(m => m.ObtainedMarks);
+        totalMaximum = Model.Sum(m => m.MaxMarks);
+        percentage = totalMaximum > 0 ? Math.Round((totalObtained / totalMaximum) * 100, 2) : 0;
+        subjectCount = Model.Select(m => m.Subject).Distinct().Count();
+        // Group by subject
+        subjectGroups = Model.GroupBy(m => m.Subject).ToList();
+        }
+        }
+
+        <div class="container mt-4">
+            @if (!Model.Any())
+            {
+            <div class="alert alert-info">
+                <h4 class="alert-heading">No Results Available</h4>
+                <p>Your academic results have not been recorded yet. Please check back later or contact your
+                    administrator.</p>
+            </div>
+            }
+            else
+            {
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="mb-0 fs-4">Academic Results</h2>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3 mb-3">
+                            <div class="card border-primary h-100">
+                                <div class="card-body text-center">
+                                    <h5 class="mb-0">Overall Percentage</h5>
+                                    <h2 class="display-4 my-3">@percentage%</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="card border-success h-100">
+                                <div class="card-body text-center">
+                                    <h5 class="mb-0">Total Marks</h5>
+                                    <h2 class="display-4 my-3">@totalObtained</h2>
+                                    <p class="text-muted mb-0">out of @totalMaximum</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="card border-info h-100">
+                                <div class="card-body text-center">
+                                    <h5 class="mb-0">Maximum Marks</h5>
+                                    <h2 class="display-4 my-3">@totalMaximum</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="card border-warning h-100">
+                                <div class="card-body text-center">
+                                    <h5 class="mb-0">Subjects</h5>
+                                    <h2 class="display-4 my-3">@subjectCount</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Subject-wise Performance</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Subject</th>
+                                    <th>Marks</th>
+                                    <th>Performance</th>
+                                    <th>Grade</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var group in subjectGroups)
+                                {
+                                var subjectTotal = group.Sum(m => m.ObtainedMarks);
+                                var subjectMax = group.Sum(m => m.MaxMarks);
+                                var subjectPercentage = subjectMax > 0 ? (subjectTotal / subjectMax) * 100 : 0;
+
+                                string grade;
+                                string colorClass;
+
+                                if (subjectPercentage >= 90) { grade = "A+"; colorClass = "success"; }
+                                else if (subjectPercentage >= 80) { grade = "A"; colorClass = "success"; }
+                                else if (subjectPercentage >= 70) { grade = "B+"; colorClass = "primary"; }
+                                else if (subjectPercentage >= 60) { grade = "B"; colorClass = "primary"; }
+                                else if (subjectPercentage >= 50) { grade = "C"; colorClass = "warning"; }
+                                else { grade = "F"; colorClass = "danger"; }
+
+                                <tr>
+                                    <td>@group.Key</td>
+                                    <td>@subjectTotal / @subjectMax</td>
+                                    <td>
+                                        <div class="progress" style="height: 8px;">
+                                            <div class="progress-bar bg-@colorClass" role="progressbar"
+                                                style="width: @subjectPercentage%;" aria-valuenow="@subjectPercentage"
+                                                aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <small class="d-block mt-1">@Math.Round(subjectPercentage, 2)%</small>
+                                    </td>
+                                    <td><span class="badge bg-@colorClass">@grade</span></td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Performance Trend</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="performanceChart" height="250"></canvas>
+                </div>
+            </div>
+
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Additional Information</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3 mb-3">
+                            <h6>Semester</h6>
+                            <p>@(Model.Any() ? Model.First().Semester : "N/A")</p>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <h6>Exam Type</h6>
+                            <p>@(Model.Any() ? Model.GroupBy(m => m.ExamType).Count() : 0) Types</p>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <h6>Academic Year</h6>
+                            <p>2024-2025</p>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <h6>Result Date</h6>
+                            <p>@DateTime.Now.ToString("dd MMM yyyy")</p>
+                        </div>
+                    </div>
+                    <div class="alert alert-info mt-3 mb-2">
+                        <small><i class="bi bi-info-circle-fill me-2"></i> This result is provisional and subject to
+                            verification by the examination committee.</small>
+                    </div>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button class="btn btn-outline-primary">
+                            <i class="bi bi-download me-2"></i> Download PDF
+                        </button>
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+
+        @if (Model.Any())
+        {
+        @section Scripts {
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+            $(document).ready(function () {
+                // Create chart with fixed data points
+                var ctx = document.getElementById('performanceChart').getContext('2d');
+                var performanceChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Semester I', 'Semester II'],
+                        datasets: [{
+                            label: 'Performance (%)',
+                            data: [@percentage, @percentage], // Use same percentage for both points
+                            backgroundColor: 'rgba(13, 110, 253, 0.2)',
+                            borderColor: 'rgba(13, 110, 253, 1)',
+                            borderWidth: 2,
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: false,
+                                min: 40,
+                                max: 100
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                            }
+                        }
+                    }
+                });
+            });
+        </script>
+        }
+        }

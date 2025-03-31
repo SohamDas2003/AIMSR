@@ -32,66 +32,34 @@ namespace AIMSR.Controllers
                 return NotFound("User not found");
             }
 
+            // FOR NEW USERS: Always return empty list to ensure no mock data is shown
+            // We will force this behavior until an admin specifically adds attendance records
+            var roles = await _userManager.GetRolesAsync(user);
+            if (!roles.Contains("Admin"))
+            {
+                var isNewUser = DateTime.UtcNow.Subtract(
+                    user.LockoutEnd?.UtcDateTime ?? DateTime.MinValue
+                ).TotalDays < 7;
+                if (isNewUser)
+                {
+                    return View(new List<Attendance>());
+                }
+            }
+
             // Get student roll number from user profile
             int rollNo;
             if (!int.TryParse(user.StudentId, out rollNo))
             {
-                rollNo = 101; // Default roll number if not set
-                user.StudentId = rollNo.ToString();
-                await _userManager.UpdateAsync(user);
+                return View(new List<Attendance>()); // Return empty list if roll number is not valid
             }
 
-            // Check if attendance records exist for this user
+            // Get attendance records for this user
             var attendance = await _context.Attendance
                 .Where(a => a.RollNo == rollNo)
                 .OrderByDescending(a => a.Date)
                 .ToListAsync();
 
-            // If no records exist, create sample attendance data
-            if (attendance == null || !attendance.Any())
-            {
-                attendance = GenerateSampleAttendanceData(rollNo);
-                _context.Attendance.AddRange(attendance);
-                await _context.SaveChangesAsync();
-            }
-
             return View(attendance);
-        }
-
-        private List<Attendance> GenerateSampleAttendanceData(int rollNo)
-        {
-            var subjects = new[] { "Mathematics", "Computer Science", "Database Management", "Software Engineering", "Web Development" };
-            
-            var attendanceList = new List<Attendance>();
-            var random = new Random();
-            
-            // Generate data for the last 30 days
-            for (int i = 0; i < 30; i++)
-            {
-                var date = DateTime.Now.AddDays(-i);
-                
-                // Skip weekends
-                if (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday)
-                {
-                    continue;
-                }
-                
-                // Add 1-3 subjects per day
-                for (int j = 0; j < random.Next(1, 4); j++)
-                {
-                    var subjectIndex = random.Next(0, subjects.Length);
-                    
-                    attendanceList.Add(new Attendance
-                    {
-                        RollNo = rollNo,
-                        Date = date,
-                        Subject = subjects[subjectIndex],
-                        Status = random.Next(0, 10) < 8 ? "Present" : "Absent" // 80% chance of being present
-                    });
-                }
-            }
-            
-            return attendanceList;
         }
     }
 }

@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
+using AIMSR.Data;
+using System.Linq;
 
 namespace AIMSR.Controllers
 {
@@ -10,11 +12,15 @@ namespace AIMSR.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly ApplicationDbContext _context;
 
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        public AccountController(UserManager<ApplicationUser> userManager, 
+                               SignInManager<ApplicationUser> signInManager,
+                               ApplicationDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _context = context;
         }
 
         // GET: /Account/Register
@@ -54,6 +60,9 @@ namespace AIMSR.Controllers
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    // Assign Student role by default
+                    await _userManager.AddToRoleAsync(user, "Student");
+                    
                     // Redirect to login page after successful registration
                     return RedirectToAction("Login");
                 }
@@ -108,6 +117,47 @@ namespace AIMSR.Controllers
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ClearMyData()
+        {
+            // Get current user
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return NotFound("User not found");
+            }
+            
+            // Make sure this is a student
+            var roles = await _userManager.GetRolesAsync(user);
+            if (!roles.Contains("Student"))
+            {
+                return Forbid("Only students can clear their data");
+            }
+            
+            if (int.TryParse(user.StudentId, out int rollNo))
+            {
+                // Remove all attendance records
+                var attendanceRecords = _context.Attendance.Where(a => a.RollNo == rollNo).ToList();
+                if (attendanceRecords.Any())
+                {
+                    _context.Attendance.RemoveRange(attendanceRecords);
+                }
+                
+                // Remove all marks records
+                var marksRecords = _context.Marks.Where(m => m.RollNo == rollNo).ToList();
+                if (marksRecords.Any())
+                {
+                    _context.Marks.RemoveRange(marksRecords);
+                }
+                
+                await _context.SaveChangesAsync();
+                
+                TempData["Message"] = "All your data has been cleared successfully.";
+            }
+            
+            return RedirectToAction("Index", "Student");
         }
     }
 } 
